@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-public class Main {
+public class Main implements ActionListener{
     private static JFrame frame;
 
     static JLabel insertPriceLabel;
@@ -66,13 +66,13 @@ public class Main {
 
             clear = new JButton("clear");
             contentPane.add(clear);
-            classListener listener = new classListener();
-            clear.addActionListener(listener);
+            
+            clear.addActionListener(this);
 
             calculate = new JButton("calculate");
             contentPane.add(calculate);
-            classListener listener1 = new classListener();
-            calculate.addActionListener(listener1);
+            
+            calculate.addActionListener(this);
 
             finalPriceLabel = new JLabel("the final price is : ");
             contentPane.add(finalPriceLabel);
@@ -83,8 +83,7 @@ public class Main {
 
             change = new JButton("change");
             contentPane.add(change);
-            classListener listener2 = new classListener();
-            change.addActionListener(listener2);
+            change.addActionListener(this);
         }
         else {
 
@@ -95,13 +94,13 @@ public class Main {
         }
 
     }
-
-    public static void main(String[] args) {
+    public Main(){
         makeFrame();
     }
-}
 
-class classListener extends Main implements ActionListener {
+    public static void main(String[] args) {
+       new Main();
+    }
     public void actionPerformed(ActionEvent event)
     {
         String command = event.getActionCommand();
@@ -121,4 +120,6 @@ class classListener extends Main implements ActionListener {
 
     }
 }
+
+
 
