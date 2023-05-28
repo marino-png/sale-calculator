@@ -13,14 +13,27 @@ public class Main implements ActionListener{
     static JButton clear;
     static JButton calculate;
     static JButton change;
-    static JLabel label1;
-    static boolean booleanChange = true;
+    static JLabel ageLabel;
+    JLabel yearLabel;
+    JTextField ageText;
+    JTextField yearText;
+    JButton defineButton;
+    boolean booleanChange = true;
 
 
     public void calculate(){
         double finalePriceInt = getPriceInt() - ((getPriceInt() * getSaleInt()) / 100);
         String finalePriceString = String.valueOf(finalePriceInt);
         priceWithSale.setText(finalePriceString);
+    }
+
+    public void define(){
+        if(yearText.getText().equals("")){
+            yearText.setText(""+(2023 - getAge()));          
+        }
+        else{
+            ageText.setText(""+(2023 - getYear()));
+        }
     }
 
     public Double getPriceInt(){
@@ -35,8 +48,17 @@ public class Main implements ActionListener{
         return saleInt;
     }
 
-     public static void makeFrame(){
+    public int getAge(){
+        return Integer.parseInt(ageText.getText());
+    }
+
+    public int getYear(){
+        return Integer.parseInt(yearText.getText());
+    }
+
+    public  void makeFrame(){
         frame = new JFrame("sale calculator");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         makeContentPane();
 
         frame.pack();
@@ -47,7 +69,7 @@ public class Main implements ActionListener{
         frame.setVisible(false);
     }
 
-    public static void makeContentPane(){
+    public  void makeContentPane(){
         Container contentPane = frame.getContentPane();
         contentPane.setLayout(new GridLayout(5,1,15,15));
 
@@ -87,10 +109,21 @@ public class Main implements ActionListener{
         }
         else {
 
-            contentPane.setLayout(new GridLayout(1,1,160,90));
+            contentPane.setLayout(new GridLayout(0,2,15,15));
 
-            label1 = new JLabel("good programmer ");
-            contentPane.add(label1);
+            ageLabel = new JLabel("age: ");
+            yearLabel = new JLabel("year");
+            yearText = new JTextField(20);
+            ageText = new JTextField(20);
+            defineButton = new JButton("define age");
+            defineButton.addActionListener(this);
+
+
+            contentPane.add(ageLabel);
+            contentPane.add(ageText);
+            contentPane.add(yearLabel);
+            contentPane.add(yearText);
+            contentPane.add(defineButton);
         }
 
     }
@@ -109,13 +142,16 @@ public class Main implements ActionListener{
             sale.setText("");
             priceWithSale.setText("");
         }
-        if(command.equals("calculate")){
+        else if(command.equals("calculate")){
             calculate();
         }
-        if(command.equals("change")){
+        else if(command.equals("change")){
             booleanChange = false;
             refresh();
             makeFrame();
+        }
+        else if (command.equals("define age")){
+            define();
         }
 
     }
